@@ -1,0 +1,117 @@
+# READING AND WRITING OF A TEXT FILE
+
+# Establishing the file path
+PATH = "C:/Users/milan/OneDrive/Desktop/Rasmussen College/QMB5100/Module03/"
+
+# Establishing I/O
+INFILE_TEXT = "input_text.txt"
+OUTFILE_TEXT = "output_R_text.txt"
+
+f = file( paste(PATH,INFILE_TEXT,sep=""), "r")
+g = file( paste(PATH,OUTFILE_TEXT,sep=""), "w")
+
+# Reading in the lines
+line = readLines(f,1)
+
+# Creating a loop which will read all lines one by one, remove capitalization, numbers, punctuation and stopwords and write the results into a new file
+while( length(line) > 0 )
+	{
+	line = tolower( line )
+	line = gsub('[0-9]+' , '', line)
+	line = gsub('[[:punct:] ]+' ,' ' ,line)
+
+	list = unlist(strsplit(line," "))
+	list = list[ ! list %in% c("the","is","of","and") ]
+	list = list[ list != "people" ]
+
+	new_line = paste(list, collapse=" ")
+
+	write( new_line, g )
+	line = readLines(f,1)
+	}
+
+close(g)
+close(f)
+
+# READING AND WRITING OF AN XML FILE
+
+# Establishing I/O
+OUTFILE_XML = "output_R_xml.txt"
+INFILE_XML = "input_xml_R_simple.txt"
+
+# Import XML library
+library( XML )
+
+# Turn XML into a dataframe
+xmldf = xmlToDataFrame(paste(PATH,INFILE_XML,sep=""))
+
+# Show number of rows, number of columns and column names
+r = nrow( xmldf )
+c = ncol( xmldf )
+cn = colnames( xmldf )
+
+# Create a list of names, emails and phone numbers
+name 	= list()
+email 	= list()
+phone 	= list()
+
+# Populate the lists with data from the XML file while adjusting the unknowns
+for( i in 1:r )
+	{
+	Name 	= as.character( xmldf[i,"name"] )
+	Email 	= as.character( xmldf[i,"email"] )
+	Phone 	= as.character( xmldf[i,"phone"] )
+	Street 	= as.character( xmldf[i,"street"] )
+	City 	= as.character( xmldf[i,"city"] )
+
+	if ( Name 	%in% c("???") ) { Name 	= "Unknown" }
+	if ( Email 	%in% c("???") ) { Email = "No Email" }
+	if ( Phone 	%in% c("???") ) { Phone = "No Phone Number" }
+	if ( Street 	%in% c("???") ) { Street= "No Address" }
+	if ( City 	%in% c("???") ) { City	= "No City" }
+
+	name 	= unlist( c( name , Name ) )
+	email 	= unlist( c( email, Email ) )
+	phone 	= unlist( c( phone, Phone ) )
+	}
+
+# Turn lists into a dataframe
+df = data.frame( name, email, phone )
+
+# Turn dataframe into XML
+xml = xmlTree("data")
+for( i in 1:nrow(df) ) {
+	xml$addNode("customer",close=FALSE)
+	for( j in names(df) ) {
+		xml$addNode(j,df[i,j])
+		}
+	xml$closeTag()
+	}
+saveXML( xml,paste(PATH,OUTFILE_XML,sep=""))
+
+# READING AND WRITING OF A BINARY FILE
+
+# Establishing I/O
+INFILE_BINARY = "input_binary.jpg"
+OUTFILE_BINARY = "output_R_binary.jpg"
+
+f = file( paste(PATH,INFILE_BINARY,sep=""), "rb")
+g = file( paste(PATH,OUTFILE_BINARY,sep=""), "wb")
+
+# Read and write the binary file
+bin.data = readBin( f, integer(), n=1 )
+
+while( length(bin.data) > 0 ) {
+	writeBin(bin.data,g)
+	bin.data = readBin( f, character(),n=1 )	
+	}
+
+close(g)
+close(f)
+
+
+
+
+
+
+

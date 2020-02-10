@@ -1,0 +1,127 @@
+# READING AND WRITING OF A TEXT FILE
+
+# Establishing file path
+PATH = "C://Users//milan//OneDrive//Desktop//Rasmussen College//QMB5100//Module03//"
+
+# Importing string library
+import string
+
+# Establishing I/O
+INFILE_TEXT = "input_text.txt"
+OUTFILE_TEXT = "output_py_text.txt"
+
+f = open( PATH + INFILE_TEXT, "r" )
+g = open( PATH + OUTFILE_TEXT, "w" )
+
+# Creating a loop which will read all lines one by one, remove capitalization, numbers, punctuation and stopwords and write the results into a new file
+line = f.readline()
+while line:
+    line = line.lower()
+    line = ''.join([i for i in line if not i.isdigit()])
+    line = ''.join(c for c in line if c not in string.punctuation)
+    words = line.split()
+    new_words = list()
+    for word in words:
+        if word not in ["the","is","of","and","people"]:
+            new_words.append( word )
+    new_line = " ".join( new_words )
+    g.write( new_line )
+    g.write("\n")
+    line = f.readline()
+ 
+g.close()
+f.close()
+
+# READING AND WRITING OF AN XML FILE
+
+# Establishing I/O
+INFILE_XML = "input_xml_Python.txt"
+OUTFILE_XML = "output_py_xml.txt"
+
+# Importing XML library, XML trees and pandas
+import xml
+import xml.etree.ElementTree as ET
+import pandas as pd
+
+# Creating a loop which will get data from customers
+for child in root:
+    Email = "???"
+    Phone = "???"
+    Street = "???"
+    City = "???"
+    
+    Name = child.get("name")
+    
+    for theEmail in child.findall("email") :
+        Email = theEmail.text
+        
+    for thePhone in child.findall("phone") :
+        Phone = thePhone.text
+        
+    for theAddress in child.findall("address") :
+        for theStreet in theAddress.findall("street") :
+            Street = theStreet.text
+        for theCity in theAddress.findall("city") :
+            City = theCity.text
+
+    row_dictionary = {}
+    row_dictionary["Name"] = Name
+    row_dictionary["Email"] = Email
+    row_dictionary["Phone"] = Phone
+    row_dictionary["Street"] = Street
+    row_dictionary["City"] = City
+    
+    row_list.append( row_dictionary )    
+
+df = pd.DataFrame( row_list )
+
+# Exporting the dataframe into a new XML file
+data = ET.Element('data')
+for i in range(df.shape[0]):
+    Name = str(df.iloc[i]["Name"])
+    Email = str(df.iloc[i]["Email"])
+    Phone = str(df.iloc[i]["Phone"])
+    Street = str(df.iloc[i]["Street"])
+    City = str(df.iloc[i]["City"])
+  
+    items = ET.SubElement(data, 'customer')
+    items.set("name",Name)
+    
+    item1 = ET.SubElement(items, 'email')
+    item2 = ET.SubElement(items, 'phone')
+    item3 = ET.SubElement(items, 'street')
+    item4 = ET.SubElement(items, 'city')
+    
+    item1.text = Email
+    item2.text = Phone
+    item3.text = Street
+    item4.text = City
+
+    
+myXML = ET.tostring( data )
+f = open( PATH + OUTFILE_XML,"wb" )
+f.write( myXML )
+f.close()
+
+
+# READING AND WRITING OF A BINARY FILE
+
+# Establishing I/O
+INFILE_BINARY = "input_binary.jpg"
+OUTFILE_BINARY = "output_py_binary.jpg"
+
+# Read and write the binary file
+list_byte = list()
+f = open( PATH + INFILE_BINARY, "rb")
+byte = f.read(1)
+while byte:
+    list_byte.append( byte )
+    byte = f.read(1)
+f.close()
+
+
+f = open( PATH + OUTFILE_BINARY, "wb")
+for i in list_byte :
+    f.write(i)
+f.close()
+

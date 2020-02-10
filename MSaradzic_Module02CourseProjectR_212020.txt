@@ -1,0 +1,44 @@
+FILE = "C:/Users/milan/OneDrive/Desktop/Rasmussen College/QMB5100/train.csv"
+
+# Read in the file
+df = read.csv(FILE)
+
+# Check if the file was read in correctly
+head (df)
+tail (df)
+
+# Analyze the number of rows, columns and column names
+r = nrow(df)
+c = ncol(df)
+cn = colnames(df)
+
+# Analyze the average age of passengers while removing missing values
+mean(df$Age, na.rm = TRUE)
+
+# Analyze the average age by gender
+aggregate(df$Age, by=list(Sex=df$Sex), mean, na.rm=TRUE)
+
+# Analyze the average age and survival rate by gender
+aggregate(df [, c("Age", "Survived")] , by=list(Sex=df$Sex), mean, na.rm=TRUE)
+
+# Index the dataframe
+c1 = df[,c(1,2,3)]
+head(c1)
+c2 = df["Sex"]
+head(c2)
+
+# Analyze the number of passengers per class
+t = table( df$Pclass )
+
+# Make a list of all passengers in first class over the age of 50 who were female
+A = df[ which( df$Pclass == 1 & df$Age > 50 & df$Sex == "female") ,  ]
+
+
+
+
+
+
+
+
+
+

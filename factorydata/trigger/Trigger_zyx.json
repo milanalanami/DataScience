@@ -1,0 +1,25 @@
+{
+	"name": "Trigger_zyx",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyFromBlobToAzureSql",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2020-05-18T23:40:00.000Z",
+				"endTime": "2020-05-24T23:40:00.000Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

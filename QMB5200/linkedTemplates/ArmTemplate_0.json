@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureStorageLinkedService'"
 		},
+		"LocalPCLinkedServiceViewsCSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LocalPCLinkedServiceViewsCSV'"
+		},
 		"QMB5200_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'QMB5200'"
@@ -18,6 +22,30 @@
 		"QMB5200_1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'QMB5200_1'"
+		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
+		},
+		"Mongo_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Mongo'"
+		},
+		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\myMongoData"
+		},
+		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "Milana Saradzic"
+		},
+		"Mongo_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\myMongoData"
+		},
+		"Mongo_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "milana"
 		}
 	},
 	"variables": {
@@ -33,6 +61,24 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureStorageLinkedService_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LocalPCLinkedServiceViewsCSV')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_host')]",
+					"userId": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LocalPCLinkedServiceViewsCSV_password')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -64,436 +110,17 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/QMB5200integrationRuntime1')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('SqlServer1_connectionString')]"
+				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_zyx')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "QMB5200",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Customer_ID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "FName",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "LName",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "Street",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "City",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "State",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "Zip",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "Phone",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Customer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/QMB5200')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_zyx')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "QMB5200_1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "CustomerName",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "BillToCustomerID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "CustomerCategoryID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "BuyingGroupID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "PrimaryContactPersonID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "AlternateContactPersonID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryMethodID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryCityID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "PostalCityID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "CreditLimit",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
-					},
-					{
-						"name": "AccountOpenedDate",
-						"type": "date",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "StandardDiscountPercentage",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 3
-					},
-					{
-						"name": "IsStatementSent",
-						"type": "bit",
-						"precision": 1,
-						"scale": 0
-					},
-					{
-						"name": "IsOnCreditHold",
-						"type": "bit",
-						"precision": 1,
-						"scale": 0
-					},
-					{
-						"name": "PaymentDays",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "PhoneNumber",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "FaxNumber",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryRun",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "RunPosition",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WebsiteURL",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryAddressLine1",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryAddressLine2",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryPostalCode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "DeliveryLocation",
-						"type": "geography",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "PostalAddressLine1",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "PostalAddressLine2",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "PostalPostalCode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "LastEditedBy",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "ValidFrom",
-						"type": "datetime2",
-						"precision": 27,
-						"scale": 7
-					},
-					{
-						"name": "ValidTo",
-						"type": "datetime2",
-						"precision": 27,
-						"scale": 7
-					}
-				],
-				"typeProperties": {
-					"schema": "Sales",
-					"table": "Customers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/QMB5200_1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyFromBlobToAzureSql')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_zyx",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Sales.Customers"
-							},
-							{
-								"name": "Destination",
-								"value": "dbo.Customer"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource"
-							},
-							"sink": {
-								"type": "SqlServerSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "Customer_ID",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerName",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "BillToCustomerID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "LName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerCategoryID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "Street",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "BuyingGroupID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PrimaryContactPersonID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "State",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AlternateContactPersonID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "Zip",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DeliveryMethodID",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "Phone",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_zyx",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_zyx",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_zyx')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_zyx')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Trigger_zyx')]",
@@ -502,15 +129,7 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "CopyFromBlobToAzureSql",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -522,8 +141,359 @@
 					}
 				}
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Mongo')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/QMB5200integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "_id",
+						"type": "varchar"
+					},
+					{
+						"name": "id",
+						"type": "varchar"
+					},
+					{
+						"name": "name",
+						"type": "varchar"
+					},
+					{
+						"name": "averageRating",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "createdAt",
+						"type": "varchar"
+					},
+					{
+						"name": "description",
+						"type": "varchar"
+					},
+					{
+						"name": "displayType",
+						"type": "varchar"
+					},
+					{
+						"name": "downloadCount",
+						"type": "varchar"
+					},
+					{
+						"name": "hideFromCatalog",
+						"type": "varchar"
+					},
+					{
+						"name": "hideFromDataJson",
+						"type": "varchar"
+					},
+					{
+						"name": "indexUpdatedAt",
+						"type": "varchar"
+					},
+					{
+						"name": "newBackend",
+						"type": "varchar"
+					},
+					{
+						"name": "numberOfComments",
+						"type": "varchar"
+					},
+					{
+						"name": "oid",
+						"type": "varchar"
+					},
+					{
+						"name": "provenance",
+						"type": "varchar"
+					},
+					{
+						"name": "publicationAppendEnabled",
+						"type": "varchar"
+					},
+					{
+						"name": "publicationDate",
+						"type": "varchar"
+					},
+					{
+						"name": "publicationGroup",
+						"type": "varchar"
+					},
+					{
+						"name": "publicationStage",
+						"type": "varchar"
+					},
+					{
+						"name": "rowsUpdatedAt",
+						"type": "varchar"
+					},
+					{
+						"name": "rowsUpdatedBy",
+						"type": "varchar"
+					},
+					{
+						"name": "tableId",
+						"type": "varchar"
+					},
+					{
+						"name": "totalTimesRead",
+						"type": "varchar"
+					},
+					{
+						"name": "viewsCount",
+						"type": "varchar"
+					},
+					{
+						"name": "viewLastModified",
+						"type": "varchar"
+					},
+					{
+						"name": "viewType",
+						"type": "varchar"
+					},
+					{
+						"name": "grants",
+						"type": "varchar"
+					},
+					{
+						"name": "metadata",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MongoDB_views_Data"
+				}
+			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/CopyFromBlobToAzureSql')]"
+				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Mongo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('Mongo_properties_typeProperties_host')]",
+					"userId": "[parameters('Mongo_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Mongo_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "QMB5200integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/QMB5200integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Mongo",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "views.csv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Mongo')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PipelineMongoDBViews')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "MongoDBCopy",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
 			]
 		}
 	]

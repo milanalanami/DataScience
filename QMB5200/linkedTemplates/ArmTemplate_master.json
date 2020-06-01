@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureStorageLinkedService'"
 		},
+		"LocalPCLinkedServiceViewsCSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LocalPCLinkedServiceViewsCSV'"
+		},
+		"Mongo_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Mongo'"
+		},
 		"QMB5200_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'QMB5200'"
@@ -18,6 +26,26 @@
 		"QMB5200_1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'QMB5200_1'"
+		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
+		},
+		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\myMongoData"
+		},
+		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "Milana Saradzic"
+		},
+		"Mongo_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\myMongoData"
+		},
+		"Mongo_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "milana"
 		},
 		"containerUri": {
 			"type": "string",
@@ -49,11 +77,32 @@
 					"AzureStorageLinkedService_connectionString": {
 						"value": "[parameters('AzureStorageLinkedService_connectionString')]"
 					},
+					"LocalPCLinkedServiceViewsCSV_password": {
+						"value": "[parameters('LocalPCLinkedServiceViewsCSV_password')]"
+					},
 					"QMB5200_connectionString": {
 						"value": "[parameters('QMB5200_connectionString')]"
 					},
 					"QMB5200_1_connectionString": {
 						"value": "[parameters('QMB5200_1_connectionString')]"
+					},
+					"SqlServer1_connectionString": {
+						"value": "[parameters('SqlServer1_connectionString')]"
+					},
+					"Mongo_password": {
+						"value": "[parameters('Mongo_password')]"
+					},
+					"LocalPCLinkedServiceViewsCSV_properties_typeProperties_host": {
+						"value": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_host')]"
+					},
+					"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
+						"value": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId')]"
+					},
+					"Mongo_properties_typeProperties_host": {
+						"value": "[parameters('Mongo_properties_typeProperties_host')]"
+					},
+					"Mongo_properties_typeProperties_userId": {
+						"value": "[parameters('Mongo_properties_typeProperties_userId')]"
 					}
 				}
 			},

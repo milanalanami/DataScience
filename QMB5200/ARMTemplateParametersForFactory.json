@@ -8,11 +8,32 @@
 		"AzureStorageLinkedService_connectionString": {
 			"value": ""
 		},
+		"LocalPCLinkedServiceViewsCSV_password": {
+			"value": ""
+		},
+		"Mongo_password": {
+			"value": ""
+		},
 		"QMB5200_connectionString": {
 			"value": ""
 		},
 		"QMB5200_1_connectionString": {
 			"value": ""
+		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
+		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_host": {
+			"value": "C:\\myMongoData"
+		},
+		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
+			"value": "Milana Saradzic"
+		},
+		"Mongo_properties_typeProperties_host": {
+			"value": "C:\\myMongoData"
+		},
+		"Mongo_properties_typeProperties_userId": {
+			"value": "milana"
 		}
 	}
 }

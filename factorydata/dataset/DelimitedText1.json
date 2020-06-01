@@ -13,7 +13,7 @@
 				"fileName": "views.csv"
 			},
 			"columnDelimiter": ",",
-			"escapeChar": "\\",
+			"escapeChar": "\"",
 			"quoteChar": "\""
 		},
 		"schema": [

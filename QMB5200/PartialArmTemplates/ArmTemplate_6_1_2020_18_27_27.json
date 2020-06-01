@@ -6,46 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "QMB5200"
-		},
-		"AzureStorageLinkedService_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureStorageLinkedService'"
-		},
-		"LocalPCLinkedServiceViewsCSV_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'LocalPCLinkedServiceViewsCSV'"
-		},
-		"Mongo_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Mongo'"
-		},
-		"QMB5200_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'QMB5200'"
-		},
-		"QMB5200_1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'QMB5200_1'"
-		},
-		"SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
-		},
-		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "C:\\myMongoData"
-		},
-		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "Milana Saradzic"
-		},
-		"Mongo_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "C:\\myMongoData"
-		},
-		"Mongo_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "milana"
 		}
 	},
 	"variables": {
@@ -385,15 +345,13 @@
 						"inputs": [
 							{
 								"referenceName": "DelimitedText1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -401,8 +359,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]"
 			]
 		},
 		{
@@ -514,281 +471,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Mongo')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "_id",
-						"type": "varchar"
-					},
-					{
-						"name": "id",
-						"type": "varchar"
-					},
-					{
-						"name": "name",
-						"type": "varchar"
-					},
-					{
-						"name": "averageRating",
-						"type": "varchar"
-					},
-					{
-						"name": "category",
-						"type": "varchar"
-					},
-					{
-						"name": "createdAt",
-						"type": "varchar"
-					},
-					{
-						"name": "description",
-						"type": "varchar"
-					},
-					{
-						"name": "displayType",
-						"type": "varchar"
-					},
-					{
-						"name": "downloadCount",
-						"type": "varchar"
-					},
-					{
-						"name": "hideFromCatalog",
-						"type": "varchar"
-					},
-					{
-						"name": "hideFromDataJson",
-						"type": "varchar"
-					},
-					{
-						"name": "indexUpdatedAt",
-						"type": "varchar"
-					},
-					{
-						"name": "newBackend",
-						"type": "varchar"
-					},
-					{
-						"name": "numberOfComments",
-						"type": "varchar"
-					},
-					{
-						"name": "oid",
-						"type": "varchar"
-					},
-					{
-						"name": "provenance",
-						"type": "varchar"
-					},
-					{
-						"name": "publicationAppendEnabled",
-						"type": "varchar"
-					},
-					{
-						"name": "publicationDate",
-						"type": "varchar"
-					},
-					{
-						"name": "publicationGroup",
-						"type": "varchar"
-					},
-					{
-						"name": "publicationStage",
-						"type": "varchar"
-					},
-					{
-						"name": "rowsUpdatedAt",
-						"type": "varchar"
-					},
-					{
-						"name": "rowsUpdatedBy",
-						"type": "varchar"
-					},
-					{
-						"name": "tableId",
-						"type": "varchar"
-					},
-					{
-						"name": "totalTimesRead",
-						"type": "varchar"
-					},
-					{
-						"name": "viewsCount",
-						"type": "varchar"
-					},
-					{
-						"name": "viewLastModified",
-						"type": "varchar"
-					},
-					{
-						"name": "viewType",
-						"type": "varchar"
-					},
-					{
-						"name": "grants",
-						"type": "varchar"
-					},
-					{
-						"name": "metadata",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "MongoDB_views_Data"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureStorageLinkedService')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureStorageLinkedService_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LocalPCLinkedServiceViewsCSV')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_host')]",
-					"userId": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('LocalPCLinkedServiceViewsCSV_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Mongo')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('Mongo_properties_typeProperties_host')]",
-					"userId": "[parameters('Mongo_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('Mongo_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "QMB5200integrationRuntime1",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/QMB5200integrationRuntime1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QMB5200')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('QMB5200_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QMB5200_1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('QMB5200_1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServer1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Trigger_zyx')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 24,
-						"startTime": "2020-05-18T23:40:00.000Z",
-						"endTime": "2020-05-24T23:40:00.000Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Mongo')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QMB5200integrationRuntime1')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		}

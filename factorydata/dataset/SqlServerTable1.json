@@ -1,0 +1,133 @@
+{
+	"name": "SqlServerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "_id",
+				"type": "varchar"
+			},
+			{
+				"name": "id",
+				"type": "varchar"
+			},
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "averageRating",
+				"type": "varchar"
+			},
+			{
+				"name": "category",
+				"type": "varchar"
+			},
+			{
+				"name": "createdAt",
+				"type": "varchar"
+			},
+			{
+				"name": "description",
+				"type": "varchar"
+			},
+			{
+				"name": "displayType",
+				"type": "varchar"
+			},
+			{
+				"name": "downloadCount",
+				"type": "varchar"
+			},
+			{
+				"name": "hideFromCatalog",
+				"type": "varchar"
+			},
+			{
+				"name": "hideFromDataJson",
+				"type": "varchar"
+			},
+			{
+				"name": "indexUpdatedAt",
+				"type": "varchar"
+			},
+			{
+				"name": "newBackend",
+				"type": "varchar"
+			},
+			{
+				"name": "numberOfComments",
+				"type": "varchar"
+			},
+			{
+				"name": "oid",
+				"type": "varchar"
+			},
+			{
+				"name": "provenance",
+				"type": "varchar"
+			},
+			{
+				"name": "publicationAppendEnabled",
+				"type": "varchar"
+			},
+			{
+				"name": "publicationDate",
+				"type": "varchar"
+			},
+			{
+				"name": "publicationGroup",
+				"type": "varchar"
+			},
+			{
+				"name": "publicationStage",
+				"type": "varchar"
+			},
+			{
+				"name": "rowsUpdatedAt",
+				"type": "varchar"
+			},
+			{
+				"name": "rowsUpdatedBy",
+				"type": "varchar"
+			},
+			{
+				"name": "tableId",
+				"type": "varchar"
+			},
+			{
+				"name": "totalTimesRead",
+				"type": "varchar"
+			},
+			{
+				"name": "viewsCount",
+				"type": "varchar"
+			},
+			{
+				"name": "viewLastModified",
+				"type": "varchar"
+			},
+			{
+				"name": "viewType",
+				"type": "varchar"
+			},
+			{
+				"name": "grants",
+				"type": "varchar"
+			},
+			{
+				"name": "metadata",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MongoDB_views_Data"
+		}
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "QMB5200"
+		},
+		"AzureStorageLinkedService_connectionString": {
+			"value": ""
+		},
+		"QMB5200_connectionString": {
+			"value": ""
+		},
+		"QMB5200_1_connectionString": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

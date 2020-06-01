@@ -1,0 +1,6 @@
+{
+	"name": "Mongo",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

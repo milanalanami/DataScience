@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LocalPCLinkedServiceViewsCSV'"
 		},
+		"Mongo DB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Mongo DB'"
+		},
 		"Mongo_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Mongo'"
@@ -38,6 +42,14 @@
 		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "Milana Saradzic"
+		},
+		"Mongo DB_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\myMongoData"
+		},
+		"Mongo DB_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "milana"
 		},
 		"Mongo_properties_typeProperties_host": {
 			"type": "string",
@@ -89,6 +101,9 @@
 					"SqlServer1_connectionString": {
 						"value": "[parameters('SqlServer1_connectionString')]"
 					},
+					"Mongo DB_password": {
+						"value": "[parameters('Mongo DB_password')]"
+					},
 					"Mongo_password": {
 						"value": "[parameters('Mongo_password')]"
 					},
@@ -97,6 +112,12 @@
 					},
 					"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
 						"value": "[parameters('LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId')]"
+					},
+					"Mongo DB_properties_typeProperties_host": {
+						"value": "[parameters('Mongo DB_properties_typeProperties_host')]"
+					},
+					"Mongo DB_properties_typeProperties_userId": {
+						"value": "[parameters('Mongo DB_properties_typeProperties_userId')]"
 					},
 					"Mongo_properties_typeProperties_host": {
 						"value": "[parameters('Mongo_properties_typeProperties_host')]"

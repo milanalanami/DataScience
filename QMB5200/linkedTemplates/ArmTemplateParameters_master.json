@@ -11,6 +11,9 @@
 		"LocalPCLinkedServiceViewsCSV_password": {
 			"value": ""
 		},
+		"Mongo DB_password": {
+			"value": ""
+		},
 		"Mongo_password": {
 			"value": ""
 		},
@@ -28,6 +31,12 @@
 		},
 		"LocalPCLinkedServiceViewsCSV_properties_typeProperties_userId": {
 			"value": "Milana Saradzic"
+		},
+		"Mongo DB_properties_typeProperties_host": {
+			"value": "C:\\myMongoData"
+		},
+		"Mongo DB_properties_typeProperties_userId": {
+			"value": "milana"
 		},
 		"Mongo_properties_typeProperties_host": {
 			"value": "C:\\myMongoData"

@@ -440,7 +440,8 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "FileServerReadSettings",
-									"recursive": true
+									"recursive": false,
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
@@ -826,7 +827,7 @@
 						"fileName": "wwi.csv"
 					},
 					"columnDelimiter": ",",
-					"escapeChar": "\\",
+					"escapeChar": "\"",
 					"quoteChar": "\""
 				},
 				"schema": [

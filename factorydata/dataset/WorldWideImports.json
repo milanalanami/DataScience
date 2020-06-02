@@ -13,7 +13,7 @@
 				"fileName": "wwi.csv"
 			},
 			"columnDelimiter": ",",
-			"escapeChar": "\\",
+			"escapeChar": "\"",
 			"quoteChar": "\""
 		},
 		"schema": [

@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "MongoDBCopy",
+				"name": "MongoToSQL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

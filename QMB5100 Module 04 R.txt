@@ -1,0 +1,16 @@
+# Establish file path and read in file
+FILE = "C:/Users/milan/OneDrive/Desktop/Rasmussen College/QMB5100/HistoricalQuotes.csv"
+df = read.csv( FILE )
+
+# Calculate the correlation and covariance
+Stocks.cor = cor( df )
+Stocks.cov = cov( df )
+
+# Set the graphing area to two rows and one column
+par(mfrow=c(3, 1))
+plot( df$Amazon )
+plot( df$Facebook )
+plot( df$Apple )
+
+# Return the graphing area to original settings
+par(mfrow=c(1, 1))

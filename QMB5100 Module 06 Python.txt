@@ -1,0 +1,66 @@
+import pandas as pd
+
+# Establish the file path
+FILE = "C://Users//milan//OneDrive//Desktop//Rasmussen College//QMB5100//GAFA Stock Prices.csv"
+OUTFILE = "C://Users//milan//OneDrive//Desktop//Rasmussen College//QMB5100//GAFA_out_M06.csv"
+
+# Read in file and calculate the average price of stock
+df = pd.read_csv( FILE )
+df["Average"] = ( df.Open + df.Close ) / 2
+
+# Create flag variables
+Flag1 = df.Stock == "Google"
+Flag2 = df.Stock == "Apple"
+Flag3 = df.Stock == "Facebook"
+Flag4 = df.Stock == "Amazon"
+
+# Create new dataframes
+df1 = df[ Flag1 ]
+df1 = df1[ ["Date", "Average"] ]
+df1 = df1.rename(columns={"Average" : "Google"})
+df1 = df1.reset_index(drop=True)
+
+df2 = df[ Flag2 ]
+df2 = df2[ ["Date", "Average"] ]
+df2 = df2.rename(columns={"Average" : "Apple"})
+df2 = df2.reset_index(drop=True)
+
+df3 = df[ Flag3 ]
+df3 = df3[ ["Date", "Average"] ]
+df3 = df3.rename(columns={"Average" : "Facebook"})
+df3 = df3.reset_index(drop=True)
+
+df4 = df[ Flag4 ]
+df4 = df4[ ["Date", "Average"] ]
+df4 = df4.rename(columns={"Average" : "Amazon"})
+df4 = df4.reset_index(drop=True)
+
+# Create spending variables
+TOTAL_DOLLARS = 10000
+INVEST_AMT = TOTAL_DOLLARS / 4
+
+# Merge dataframes based on date
+dfz = pd.merge( df1, df2, on="Date", how="inner" )
+dfz = pd.merge( dfz, df3, on="Date", how="inner" )
+dfz = pd.merge( dfz, df4, on="Date", how="inner" )
+dfz["Shares_Google"] = INVEST_AMT / dfz["Google"]
+dfz["Shares_Apple"] = INVEST_AMT / dfz["Apple"]
+dfz["Shares_Facebook"] = INVEST_AMT / dfz["Facebook"]
+dfz["Shares_Amazon"] = INVEST_AMT / dfz["Amazon"]
+
+# Convert share values to integers
+dfz.Shares_Google = dfz.Shares_Google.astype( int )
+dfz.Shares_Apple = dfz.Shares_Apple.astype( int )
+dfz.Shares_Facebook = dfz.Shares_Facebook.astype( int )
+dfz.Shares_Amazon = dfz.Shares_Amazon.astype( int )
+
+# Print the dataframe to test
+print( dfz.head() )
+
+# Change "Date" the type from string to date and sort
+dfz.Date = pd.to_datetime( dfz.Date )
+dfz = dfz.sort_values( ["Date"], ascending=[True] )
+dfz = dfz.reset_index(drop=True)
+
+# Save the new dataframe
+dfz.to_csv(OUTFILE,index=False)

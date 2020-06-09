@@ -1,0 +1,22 @@
+# Establish the file path
+FILE = "C:/Users/milan/OneDrive/Desktop/Rasmussen College/QMB5100/GAFA_out_M06.csv"
+
+# Read in the dataframe
+df = read.csv( FILE )
+head( df )
+
+par(mfrow=c(2,2))
+hist( df$Google , col="#0000BB" )
+hist( df$Apple, col="#00BB00" )
+hist( df$Facebook, col="#BB0000" )
+hist( df$Amazon, col="#880088" )
+par(mfrow=c(1,1))
+
+par(mfrow=c(2,2))
+hist( df$Shares_Google , col="#0000BB" )
+hist( df$Shares_Apple, col="#00BB00" )
+hist( df$Shares_Facebook, col="#BB0000" )
+hist( df$Shares_Amazon, col="#880088" )
+par(mfrow=c(1,1))
+
+

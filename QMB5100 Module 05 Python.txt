@@ -1,0 +1,56 @@
+import pandas as pd
+
+# Establish file paths
+FILE = "C://Users//milan//OneDrive//Desktop//Rasmussen College//QMB5100//GAFA Stock Prices.csv"
+OUTFILE = "C://Users//milan//OneDrive//Desktop//Rasmussen College//QMB5100//GAFA_out_M05.csv"
+
+# Set max number of rows and columns
+pd.set_option('display.max_row', 1000)
+pd.set_option('display.max_columns', 50)
+
+# Read in the file and calculate stock price average
+df = pd.read_csv( FILE )
+df["Average"] = ( df.Open + df.Close ) / 2
+
+# Check for unique variables in a column
+print( df.Stock.unique() )
+
+# Create flag variables
+Flag1 = df.Stock == "Google"
+Flag2 = df.Stock == "Apple"
+Flag3 = df.Stock == "Facebook"
+Flag4 = df.Stock == "Amazon"
+
+# Create new dataframes
+df1 = df[ Flag1 ]
+df1 = df1[ ["Date", "Average"] ]
+df1 = df1.rename(columns={"Average" : "Google"})
+df1 = df1.reset_index(drop=True)
+
+df2 = df[ Flag2 ]
+df2 = df2[ ["Date", "Average"] ]
+df2 = df2.rename(columns={"Average" : "Apple"})
+df2 = df2.reset_index(drop=True)
+
+df3 = df[ Flag3 ]
+df3 = df3[ ["Date", "Average"] ]
+df3 = df3.rename(columns={"Average" : "Facebook"})
+df3 = df3.reset_index(drop=True)
+
+df4 = df[ Flag4 ]
+df4 = df4[ ["Date", "Average"] ]
+df4 = df4.rename(columns={"Average" : "Amazon"})
+df4 = df4.reset_index(drop=True)
+
+# Merge dataframes based on date
+dfx = pd.merge( df1, df2, on="Date", how="outer" )
+dfx = pd.merge( dfx, df3, on="Date", how="outer" )
+dfx = pd.merge( dfx, df4, on="Date", how="outer" )
+
+# Change "Date" the type from string to date and sort
+dfx.Date = pd.to_datetime( dfx.Date )
+dfx = dfx.sort_values( ["Date"], ascending=[True] )
+dfx = dfx.reset_index(drop=True)
+
+# Save the dataframe to a new file
+dfx.to_csv(OUTFILE,index=False)

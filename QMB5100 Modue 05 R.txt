@@ -1,0 +1,53 @@
+# Establish the file path
+FILE = "C:/Users/milan/OneDrive/Desktop/Rasmussen College/QMB5100/GAFA_OUT_M05.csv"
+
+# Read in the file and set the "Date" column to date
+df = read.csv( FILE )
+df["Date"] = as.Date( df$Date, "%Y-%m-%d" )
+
+# Create flags
+F1 = ( ! is.na( df$Google ) )
+F2 = ( ! is.na( df$Apple ) )
+F3 = ( ! is.na( df$Facebook ) )
+F4 = ( ! is.na( df$Amazon ) )
+
+# Create new dataframes
+df1 = df[F1, c("Date", "Google")   ]
+df2 = df[F2, c("Date", "Apple") ]
+df3 = df[F1, c("Date", "Facebook")   ]
+df4 = df[F2, c("Date", "Amazon") ]
+
+# Plot the unique stocks
+par(mfrow=c(2,2))
+plot( df1$Google ~ df1$Date, type="l", col="#0000BB" )
+plot( df2$Apple ~ df2$Date, type="l", col="#00BB00" )
+plot( df3$Facebook ~ df1$Date, type="l", col="#BB0000" )
+plot( df4$Amazon ~ df2$Date, type="l", col="#880088" )
+par(mfrow=c(1,1))
+
+# Use ggplot to plot the unique stocks
+library( ggplot2 )
+library( gridExtra )
+p11 = ggplot(df1, aes(x = Date, y = Google))   + geom_line(color = "#0000BB", size = 1)
+p12 = ggplot(df2, aes(x = Date, y = Apple)) + geom_line(color = "#00BB00", size = 1)
+p21 = ggplot(df3, aes(x = Date, y = Facebook))   + geom_line(color = "#BB0000", size = 1)
+p22 = ggplot(df4, aes(x = Date, y = Amazon)) + geom_line(color = "#880088", size = 1)
+my_plots = list( p11, p12, p21, p22 )
+grid.arrange( grobs = my_plots )
+
+# Create a new dataframe and drop the "Dates" column
+dfx = df[ , !(names(df) %in% c("Date") )]
+
+# Check the new dataframe
+head( dfx )
+
+# Calculate the mean and standard deviation of each stock
+Goog.m = mean( dfx$Google, na.rm=TRUE )
+Goog.s = sd( dfx$Google, na.rm=TRUE )
+App.m = mean( dfx$Apple, na.rm=TRUE )
+App.s = sd( dfx$Apple, na.rm=TRUE )
+Fb.m = mean( dfx$Facebook, na.rm=TRUE )
+Fb.s = sd( dfx$Facebook, na.rm=TRUE )
+Amz.m  = mean( dfx$Amazon, na.rm=TRUE )
+Amz.s = sd( dfx$Amazon, na.rm=TRUE )
+

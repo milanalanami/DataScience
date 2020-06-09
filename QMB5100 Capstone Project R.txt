@@ -1,0 +1,74 @@
+# Read in the file
+df = read.csv(file="C://Users//milan//OneDrive//Desktop//Rasmussen College//QMB5100//train_v2.csv", header=TRUE, sep=",")
+
+# Perform checks on the file
+print( typeof( df ) )
+print( class( df ) )
+print( nrow( df ) )
+print( length( df ) )
+print( head( df ) )
+print( tail( df ) )
+
+# Set the lubridate library
+library( lubridate )
+
+# Adjust data types
+df$Date 	= as.Date( df$Date )
+
+df$dYear 	= year( df$Date )
+df$dMonth 	= month(df$Date )
+df$dWeek 	= week( df$Date )
+
+# Calculate the mean of sales by month and sort
+y = sort( with( df, tapply( Sales, DayOfWeek, mean ) ) )
+
+# Create month flags
+df$month_01 	= as.numeric( ( df$dMonth %in% c(1) ))
+df$month_11 	= as.numeric( ( df$dMonth %in% c(11) ))
+df$month_12 	= as.numeric( ( df$dMonth %in% c(12) ))
+
+# Create day flags
+df$dow_1 	= as.numeric( ( df$DayOfWeek %in% c(1) ))
+df$dow_2 	= as.numeric( ( df$DayOfWeek %in% c(2) ))
+df$dow_3 	= as.numeric( ( df$DayOfWeek %in% c(3) ))
+df$dow_4 	= as.numeric( ( df$DayOfWeek %in% c(4) ))
+df$dow_5 	= as.numeric( ( df$DayOfWeek %in% c(5) ))
+df$dow_6 	= as.numeric( ( df$DayOfWeek %in% c(6) ))
+df$dow_7 	= as.numeric( ( df$DayOfWeek %in% c(7) ))
+
+# Remove unneccessary columns
+df = df[ -c( 2, 10, 11, 12 ) ]
+
+# Set rpart and rpart.plot libraries
+library( rpart )
+library( rpart.plot )
+
+# Set control variables for the decision tree
+c=rpart.control(	maxdepth=4, 		# at most 4 split
+			cp=0.006, 		# any positive improvement will do
+                        minsplit=1,
+                        minbucket=1, 		# even leaves with 1 point are accepted
+                        xval=0 ) 		# I don't need crossvalidation
+
+# Create a decision tree to predict sales
+t = rpart( Sales ~ 	Open + Promo + StateHoliday + SchoolHoliday +
+			month_01 + month_11 + month_12 +
+			dow_1 + dow_2 + dow_3 + dow_4 + dow_5 + dow_6 + dow_7
+			, method="anova", data=df, control=c )
+
+# Print the decision tree
+printcp( t )
+rpart.plot( t, box.palette="RdBu", shadow.col="gray", nn=TRUE) 
+
+# Predict new data
+Yhat = predict( t, df )
+
+Edf = as.data.frame( Yhat )
+Edf["Sales"] = df$Sales
+Edf["Delta"] = Edf$Sales - Edf$Yhat
+Edf["SE"] = Edf$Delta ** 2 
+
+MSE = mean( Edf$SE )
+RMSE = sqrt( MSE )
+
+
